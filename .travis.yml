@@ -1,0 +1,9 @@
+notifications:
+  email: false
+language: generic
+addons:
+  apt:
+    packages:
+      - clisp
+script:
+  - ./build.sh
