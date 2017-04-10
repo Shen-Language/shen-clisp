@@ -129,6 +129,6 @@
 
 (MAPC 'FMAKUNBOUND '(boot writefile openfile))
 
-(EXT:SAVEINITMEM "Shen.mem" :INIT-FUNCTION 'shen.byteloop)
+(EXT:SAVEINITMEM "shen.mem" :INIT-FUNCTION 'shen.byteloop)
 
 (QUIT)
