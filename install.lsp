@@ -12,7 +12,12 @@
 (SETQ *release* "2.49")
 (SETQ *port* 1.9)
 (SETQ *porters* "Mark Tarver")
-(SETQ *os* "Windows 7")
+(SETQ *os*
+      (COND
+        ((FIND :WIN32 *FEATURES*) "Windows")
+        ((FIND :LINUX *FEATURES*) "Linux")
+        ((FIND :OSX *FEATURES*) "Mac OSX")
+        ((FIND :UNIX *FEATURES*) "Unix")))
 
 (DEFUN boot (File)
   (LET* ((SourceCode (openfile File))
