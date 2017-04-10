@@ -3,7 +3,7 @@
 
 # Shen SBCL
 
-[Shen](http://www.shenlanguage.org) on [GNU Common Lisp](http://www.clisp.org/) by [Mark Tarver](http://marktarver.com/).
+[Shen](http://www.shenlanguage.org) on [GNU Common Lisp](http://www.clisp.org/) by [Mark Tarver](http://marktarver.com/), with contributions by the [Shen Language Open Source Community](https://github.com/Shen-Language).
 
 Build shen-clisp by running `build.sh`/`build.bat`. This will generate a `shen.mem` file.
 
