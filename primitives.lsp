@@ -223,10 +223,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
 (DEFUN shen.less? (X Y) (IF (< X Y) 'true 'false))
 
-(DEFUN shen.greater-than-or-equal-to? (X Y) 
+(DEFUN shen.greater-than-or-equal-to? (X Y)
   (IF (>= X Y) 'true 'false))
 
-(DEFUN shen.less-than-or-equal-to? (X Y) 
+(DEFUN shen.less-than-or-equal-to? (X Y)
   (IF (<= X Y) 'true 'false))
 
 (SETQ *stinput* *STANDARD-INPUT*)
