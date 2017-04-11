@@ -5,8 +5,6 @@ addons:
   apt:
     packages:
       - clisp
-install:
-  - mkdir -p Native
-  - cp -R klambda/. .
 script:
-  - clisp -i install.lsp
+  - ./build.sh
+
