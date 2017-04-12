@@ -51,12 +51,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     ((FIND :UNIX *FEATURES*) "Unix")))
 
 (DEFUN boot (File)
-  (LET* ((SourceCode (openfile File))
-         (ObjectCode (MAPCAR (FUNCTION (LAMBDA (X) (shen.kl-to-lisp NIL X))) SourceCode)))
-    (HANDLER-CASE
-      (DELETE-FILE (FORMAT NIL "~A.lsp" File))
-      (ERROR (E) NIL))
-    (writefile (FORMAT NIL "~A.lsp" File) ObjectCode)))
+  (LET* ((KlCode (openfile File))
+         (LispCode (MAPCAR (FUNCTION (LAMBDA (X) (shen.kl-to-lisp NIL X))) KlCode))
+         (LspFile (FORMAT NIL "~A.lsp" File)))
+    (IF (PROBE-FILE LspFile) (DELETE-FILE LspFile))
+    (writefile LspFile LispCode)))
 
 (DEFUN writefile (File Out)
   (WITH-OPEN-FILE
@@ -79,9 +78,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
   (LET* ((IntermedFile (FORMAT NIL "~A.intermed" File))
          (LspFile      (FORMAT NIL "~A.lsp" IntermedFile))
          (FasFile      (FORMAT NIL "~A.fas" IntermedFile))
-         (LibFile      (FORMAT NIL "~A.lib" IntermedFile))(Read (read-in-kl File))
-         (Delete (DELETE-FILE IntermedFile))
-         (Write (write-out-kl IntermedFile Read)))
+         (LibFile      (FORMAT NIL "~A.lib" IntermedFile))
+         (Read (read-in-kl File)))
+    (DELETE-FILE IntermedFile)
+    (write-out-kl IntermedFile Read)
     (boot IntermedFile)
     (COMPILE-FILE LspFile)
     (LOAD FasFile)
