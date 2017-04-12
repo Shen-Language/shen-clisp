@@ -80,7 +80,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
          (FasFile      (FORMAT NIL "~A.fas" IntermedFile))
          (LibFile      (FORMAT NIL "~A.lib" IntermedFile))
          (Read (read-in-kl File)))
-    (DELETE-FILE IntermedFile)
     (write-out-kl IntermedFile Read)
     (boot IntermedFile)
     (COMPILE-FILE LspFile)
@@ -100,9 +99,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
   (FORMAT NIL "Native/~{~C~}.native" (nn-h (COERCE Lisp 'LIST))))
 
 (DEFUN nn-h (Lisp)
-  (IF (CHAR-EQUAL (CAR Lisp) #\.)
-      NIL
-      (CONS (CAR Lisp) (nn-h (CDR Lisp)))))
+  (IF (NOT (CHAR-EQUAL (CAR Lisp) #\.))
+    (CONS (CAR Lisp) (nn-h (CDR Lisp)))))
 
 (DEFUN read-in-kl (File)
   (WITH-OPEN-FILE
