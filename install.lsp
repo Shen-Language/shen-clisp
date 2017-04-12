@@ -23,11 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
-; Assumes *.kl files are in the current directory
+; Assumes *.kl files are in the ./klambda directory
+; Creates shen.mem file in the current directory
 ; Creates *.native files in the ./Native directory
-; Deletes *.kl files
-; Creates shen.mem file
-; Creates and deletes *.fas and *.intermed files over the course of running
+; Creates and deletes *.fas and *.intermed files
+;     in the current directory over the course of running
 
 (ENSURE-DIRECTORIES-EXIST "./Native/")
 
@@ -75,12 +75,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         (SETQ R (READ In NIL NIL))
         (PUSH R Rs))))
 
-(DEFUN clisp-install (File)
-  (LET* ((IntermedFile (FORMAT NIL "~A.intermed" File))
+(DEFUN clisp-install (KlFile)
+  (LET* ((KlPath       (FORMAT NIL "./klambda/~A" KlFile))
+         (IntermedFile (FORMAT NIL "~A.intermed" KlFile))
          (LspFile      (FORMAT NIL "~A.lsp" IntermedFile))
          (FasFile      (FORMAT NIL "~A.fas" IntermedFile))
          (LibFile      (FORMAT NIL "~A.lib" IntermedFile))
-         (Read (read-in-kl File)))
+         (Read         (read-in-kl KlPath)))
     (write-out-kl IntermedFile Read)
     (boot IntermedFile)
     (COMPILE-FILE LspFile)
@@ -88,8 +89,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     (DELETE-FILE IntermedFile)
     (move-file LspFile)
     (DELETE-FILE FasFile)
-    (DELETE-FILE LibFile)
-    (DELETE-FILE File)))
+    (DELETE-FILE LibFile)))
 
 (DEFUN move-file (Lisp)
   (LET ((Rename (native-name Lisp)))
