@@ -23,19 +23,22 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
-;;CLisp Installation Windows
+;;CLisp Installation
 ;;install and wipe away the junk
 
 (PROCLAIM '(OPTIMIZE (DEBUG 0) (SPEED 3) (SAFETY 3)))
 (SETQ CUSTOM:*COMPILE-WARNINGS* NIL)
 (SETQ *COMPILE-VERBOSE* NIL)
-
 (IN-PACKAGE :CL-USER)
+
+(DEFUN first-word (Str)
+  (SUBSEQ Str 0 (POSITION #\Space Str :START 0)))
+
 (SETF (READTABLE-CASE *READTABLE*) :PRESERVE)
 (SETQ *language* "Common Lisp")
-(SETQ *implementation* "CLisp")
-(SETQ *release* "2.49")
-(SETQ *port* 1.9)
+(SETQ *implementation* (LISP-IMPLEMENTATION-TYPE))
+(SETQ *release* (first-word (LISP-IMPLEMENTATION-VERSION)))
+(SETQ *port* 2.0)
 (SETQ *porters* "Mark Tarver")
 (SETQ *os*
       (COND
@@ -155,7 +158,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 (LOAD "overwrite.fas")
 (DELETE-FILE "overwrite.fas")
 (DELETE-FILE "overwrite.lib")
-;(load "platform.shen")
+;(load "platform.shen") ; TODO - should this remain commented-out?
 
 (MAPC 'FMAKUNBOUND '(boot writefile openfile))
 
