@@ -135,15 +135,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
 (COMPILE 'write-out-kl)
 
-(COMPILE-FILE "primitives.lsp")
-(LOAD "primitives.fas")
-(DELETE-FILE "primitives.fas")
-(DELETE-FILE "primitives.lib")
+(DEFUN import (File)
+  (LET ((SourceFile   (FORMAT NIL "~A.lsp" File))
+        (CompiledFile (FORMAT NIL "~A.fas" File))
+        (LibFile      (FORMAT NIL "~A.lib" File)))
+    (COMPILE-FILE SourceFile)
+    (LOAD CompiledFile)
+    (DELETE-FILE CompiledFile)
+    (DELETE-FILE LibFile)))
 
-(COMPILE-FILE "backend.lsp")
-(LOAD "backend.fas")
-(DELETE-FILE "backend.fas")
-(DELETE-FILE "backend.lib")
+(import "primitives")
+(import "backend")
 
 (MAPC 'clisp-install
       '("toplevel.kl"
@@ -161,11 +163,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         "types.kl" 
         "t-star.kl"))
 
-(COMPILE-FILE "overwrite.lsp")
-(LOAD "overwrite.fas")
-(DELETE-FILE "overwrite.fas")
-(DELETE-FILE "overwrite.lib")
-;(load "platform.shen") ; TODO - should this remain commented-out?
+(import "overwrite")
+(load "platform.shen")
 
 (MAPC 'FMAKUNBOUND '(boot writefile openfile))
 
