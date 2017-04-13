@@ -35,9 +35,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
                 X
                 (shen.lazyderef Value ProcessN)))
        X))
-                                    
+
 (DEFUN shen.valvector (Var ProcessN)
-  (SVREF (SVREF shen.*prologvectors* ProcessN) (SVREF Var 1)))               
+  (SVREF (SVREF shen.*prologvectors* ProcessN) (SVREF Var 1)))
 
 (DEFUN shen.unbindv (Var N)
   (LET ((Vector (SVREF shen.*prologvectors* N)))
@@ -63,18 +63,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
   (LET ((Count+1 (1+ (THE INTEGER (SVREF shen.*varcounter* N))))
         (Vector (SVREF shen.*prologvectors* N)))
        (SETF (SVREF shen.*varcounter* N) Count+1)
-       (IF (= (THE INTEGER Count+1) (THE INTEGER (limit Vector))) 
+       (IF (= (THE INTEGER Count+1) (THE INTEGER (limit Vector)))
            (shen.resizeprocessvector N Count+1)
            'skip)
        (shen.mk-pvar Count+1)))
 
 (DEFUN vector-> (Vector N X)
-  (IF (ZEROP N) 
+  (IF (ZEROP N)
       (ERROR "cannot access 0th element of a vector~%")
       (address-> Vector N X)))
 
 (DEFUN <-vector (Vector N)
-  (IF (ZEROP N) 
+  (IF (ZEROP N)
       (ERROR "cannot access 0th element of a vector~%")
        (let VectorElement (SVREF Vector N)
           (IF (EQ VectorElement (fail))
@@ -83,7 +83,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
 (DEFUN variable? (X)
  (IF (AND (SYMBOLP X) (NOT (NULL X)) (UPPER-CASE-P (CHAR (SYMBOL-NAME X) 0)))
-     'true 
+     'true
      'false))
 
 (DEFUN shen.+string? (X) (IF (AND (STRINGP X) (NOT (STRING-EQUAL X "")))
@@ -93,18 +93,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 (DEFUN thaw (F) (FUNCALL F))
 
 (DEFUN shen.byteloop ()
- (HANDLER-BIND 
-    ((WARNING #'MUFFLE-WARNING)) 
- (WITH-OPEN-STREAM 
-  (*STANDARD-INPUT* (EXT:MAKE-STREAM 
-                        :INPUT 
-                        :ELEMENT-TYPE 'UNSIGNED-BYTE)) 
-    (WITH-OPEN-STREAM (*STANDARD-OUTPUT* 
-                        (EXT:MAKE-STREAM 
+ (HANDLER-BIND
+    ((WARNING #'MUFFLE-WARNING))
+ (WITH-OPEN-STREAM
+  (*STANDARD-INPUT* (EXT:MAKE-STREAM
+                        :INPUT
+                        :ELEMENT-TYPE 'UNSIGNED-BYTE))
+    (WITH-OPEN-STREAM (*STANDARD-OUTPUT*
+                        (EXT:MAKE-STREAM
                            :OUTPUT
-                           :ELEMENT-TYPE 'UNSIGNED-BYTE)) 
+                           :ELEMENT-TYPE 'UNSIGNED-BYTE))
     (SETQ *stoutput* *STANDARD-OUTPUT*)
-    (SETQ *stinput* *STANDARD-INPUT*)                       
+    (SETQ *stinput* *STANDARD-INPUT*)
     (shen.shen)))))
 
 (DEFUN shen.lookup-func (F SymbolTable)
@@ -112,4 +112,3 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
       (IF (NULL Entry)
           (ERROR "~A has no lambda expansion~%" F)
           (CDR Entry))))
-
