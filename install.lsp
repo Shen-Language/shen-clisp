@@ -165,7 +165,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 (LOAD "overwrite.fas")
 (DELETE-FILE "overwrite.fas")
 (DELETE-FILE "overwrite.lib")
-;(load "platform.shen") ; TODO - should this remain commented-out?
+(load "platform.shen")
 
 (MAPC 'FMAKUNBOUND '(boot writefile openfile))
 
