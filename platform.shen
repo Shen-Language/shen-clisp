@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 *\
 
-\\ Plaform interop package for CL
+\\ Plaform interop package for CLisp
 
 (package lisp []
 
