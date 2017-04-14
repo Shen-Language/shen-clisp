@@ -197,6 +197,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         (T
          (ERROR "get-time does not understand the parameter ~A~%" Time))))
 
+(DEFUN shen.double-precision (X)
+  (IF (INTEGERP X) X (COERCE X 'DOUBLE-FLOAT)))
+
 (DEFUN shen.multiply (X Y)
   (* (shen.double-precision X)
      (shen.double-precision Y)))
@@ -216,21 +219,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
            Div
            (* (COERCE 1.0 'DOUBLE-FLOAT) Div))))
 
-(DEFUN shen.double-precision (X)
-  (IF (INTEGERP X) X (COERCE X 'DOUBLE-FLOAT)))
-
 (DEFUN shen.greater? (X Y) (IF (> X Y) 'true 'false))
 
 (DEFUN shen.less? (X Y) (IF (< X Y) 'true 'false))
 
-(DEFUN shen.greater-than-or-equal-to? (X Y)
-  (IF (>= X Y) 'true 'false))
+(DEFUN shen.greater-than-or-equal-to? (X Y) (IF (>= X Y) 'true 'false))
 
-(DEFUN shen.less-than-or-equal-to? (X Y)
-  (IF (<= X Y) 'true 'false))
+(DEFUN shen.less-than-or-equal-to? (X Y) (IF (<= X Y) 'true 'false))
 
 (SETQ *stinput* *STANDARD-INPUT*)
-
 (SETQ *stoutput* *STANDARD-OUTPUT*)
 
 (DEFUN number? (N) (IF (NUMBERP N) 'true 'false))

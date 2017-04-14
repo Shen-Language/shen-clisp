@@ -135,7 +135,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
 (COMPILE 'write-out-kl)
 
-(DEFUN import (File)
+(DEFUN importfile (File)
   (LET ((SourceFile   (FORMAT NIL "~A.lsp" File))
         (CompiledFile (FORMAT NIL "~A.fas" File))
         (LibFile      (FORMAT NIL "~A.lib" File)))
@@ -144,8 +144,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     (DELETE-FILE CompiledFile)
     (DELETE-FILE LibFile)))
 
-(import "primitives")
-(import "backend")
+(importfile "primitives")
+(importfile "backend")
 
 (MAPC 'clisp-install
       '("toplevel.kl"
@@ -160,13 +160,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         "writer.kl"
         "macros.kl"
         "declarations.kl"
-        "types.kl" 
+        "types.kl"
         "t-star.kl"))
 
-(import "overwrite")
+(importfile "overwrite")
 (load "platform.shen")
 
-(MAPC 'FMAKUNBOUND '(boot writefile openfile))
+(MAPC 'FMAKUNBOUND '(boot writefile openfile importfile))
 
 (EXT:SAVEINITMEM "shen.mem" :INIT-FUNCTION 'shen.byteloop)
 
