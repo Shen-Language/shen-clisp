@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
-; Assumes *.kl files are in the ./klambda directory
+; Assumes *.kl files are in the ./kernel/klambda directory
 ; Creates shen.mem file in the current directory
 ; Creates *.native files in the ./Native directory
 ; Creates and deletes *.fas and *.intermed files
@@ -76,7 +76,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         (PUSH R Rs))))
 
 (DEFUN clisp-install (KlFile)
-  (LET* ((KlPath       (FORMAT NIL "./klambda/~A" KlFile))
+  (LET* ((KlPath       (FORMAT NIL "./kernel/klambda/~A" KlFile))
          (IntermedFile (FORMAT NIL "~A.intermed" KlFile))
          (LspFile      (FORMAT NIL "~A.lsp" IntermedFile))
          (FasFile      (FORMAT NIL "~A.fas" IntermedFile))
