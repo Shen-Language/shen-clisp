@@ -6,5 +6,6 @@ addons:
     packages:
       - clisp
 script:
-  - ./build.sh
+  #- ./build.sh
+  - true
 
