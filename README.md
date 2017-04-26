@@ -7,6 +7,8 @@
 
 Fetch the kernel sources by running `./fetch.sh`/`fetch.bat`. This will download the [shen-sources](https://github.com/Shen-Language/shen-sources) release into a folder named `kernel`.
 
-Build by running `build.sh`/`build.bat`. This will generate a `shen.mem` file. If the `kernel` folder is not present, `fetch` will be called first.
+Build by running `./build.sh`/`build.bat`. This will generate a `shen.mem` file. If the `kernel` folder is not present, `fetch` will be called first.
 
-Start the shen repl by running `shen.sh`/`shen.bat`. If the `shen.mem` file is not present, `build` will be called first.
+Start the shen repl by running `./shen.sh`/`shen.bat`. If the `shen.mem` file is not present, `build` will be called first.
+
+Each script calls the previous one if necessary, so all of the above can be done by just running the `shen` script.
