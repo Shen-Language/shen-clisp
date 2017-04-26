@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ -f "./shen.mem" ]; then
+if [ ! -f "./shen.mem" ]; then
     ./build.sh
 fi
 
