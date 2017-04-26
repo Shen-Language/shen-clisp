@@ -5,9 +5,9 @@ set ReleaseName=shen-%Version%
 set FileName=ShenOSKernel-%Version%.zip
 set NestedFolderName=ShenOSKernel-%Version%
 
-del .\kernel /q /s /f
 powershell.exe -Command "Invoke-WebRequest -Uri $Env:UrlRoot/$Env:ReleaseName/$Env:FileName -OutFile .\$Env:FileName" || goto fail
 powershell.exe -Command "Expand-Archive .\$Env:FileName -DestinationPath ." || goto fail
+del .\kernel /q /s /f
 ren %NestedFolderName% kernel
 del %FileName% /q /f
 exit /b
