@@ -164,7 +164,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         "t-star.kl"))
 
 (importfile "overwrite")
-(load "platform.shen")
+;(load "platform.shen")
 
 (MAPC 'FMAKUNBOUND '(boot writefile openfile importfile))
 
