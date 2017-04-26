@@ -25,11 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
 ; Assumes *.kl files are in the ./kernel/klambda directory
 ; Creates shen.mem file in the current directory
-; Creates *.native files in the ./Native directory
+; Creates *.native files in the ./native directory
 ; Creates and deletes *.fas and *.intermed files
 ;     in the current directory over the course of running
 
-(ENSURE-DIRECTORIES-EXIST "./Native/")
+(ENSURE-DIRECTORIES-EXIST "./native/")
 
 (PROCLAIM '(OPTIMIZE (DEBUG 0) (SPEED 3) (SAFETY 3)))
 (SETQ CUSTOM:*COMPILE-WARNINGS* NIL)
@@ -97,7 +97,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     (RENAME-FILE Lisp Rename)))
 
 (DEFUN native-name (Lisp)
-  (FORMAT NIL "Native/~{~C~}.native" (nn-h (COERCE Lisp 'LIST))))
+  (FORMAT NIL "native/~{~C~}.native" (nn-h (COERCE Lisp 'LIST))))
 
 (DEFUN nn-h (Lisp)
   (IF (NOT (CHAR-EQUAL (CAR Lisp) #\.))
