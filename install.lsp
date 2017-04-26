@@ -157,7 +157,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     "t-star"))
 
 (importfile "overwrite")
-;(load "platform.shen") ; TODO: this needs to be re-enabled
+(load "platform.shen")
 
 (MAPC 'FMAKUNBOUND '(safedelete boot writefile openfile importfile))
 

@@ -107,8 +107,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     (SETQ *stinput* *STANDARD-INPUT*)
     (shen.shen)))))
 
-(DEFUN shen.lookup-func (F SymbolTable)
-   (LET ((Entry (ASSOC F SymbolTable :TEST 'EQ)))
-      (IF (NULL Entry)
-          (ERROR "~A has no lambda expansion~%" F)
-          (CDR Entry))))
+; TODO: this was breaking when platform.shen was loaded
+;       should this be fixed or removed?
+;(DEFUN shen.lookup-func (F SymbolTable)
+;   (LET ((Entry (ASSOC F SymbolTable :TEST 'EQ)))
+;      (IF (NULL Entry)
+;          (ERROR "~A has no lambda expansion~%" F)
+;          (CDR Entry))))
