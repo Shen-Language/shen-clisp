@@ -24,7 +24,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 
 ; Assumes *.kl files are in the ./kernel/klambda directory
-; Creates *.kl, *.lsp, *.fas and *.lib files in the ./native directory
+; Creates *.intermed, *.lsp, *.fas and *.lib files in the ./native directory
 ; Creates shen.mem file in the current directory
 
 (ENSURE-DIRECTORIES-EXIST "./native/")
@@ -49,15 +49,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     ((FIND :OSX *FEATURES*) "Mac OSX")
     ((FIND :UNIX *FEATURES*) "Unix")))
 
-(DEFUN safedelete (File)
-  (IF (CONSP File)
-    (MAPC 'safedelete File)
-    (IF (PROBE-FILE File) (DELETE-FILE File))))
-
 (DEFUN boot (InputFile OutputFile)
   (LET* ((KlCode (openfile InputFile))
          (LispCode (MAPCAR (FUNCTION (LAMBDA (X) (shen.kl-to-lisp NIL X))) KlCode)))
-    (safedelete OutputFile)
     (writefile OutputFile LispCode)))
 
 (DEFUN writefile (File Out)
@@ -78,21 +72,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         (PUSH R Rs))))
 
 (DEFUN clisp-install (File)
-  (LET* ((KlPath       (FORMAT NIL "./kernel/klambda/~A.kl" File))
-         (CopiedKlFile (FORMAT NIL "./native/~A.kl" File))
-         (LspFile      (FORMAT NIL "./native/~A.lsp" File))
-         (FasFile      (FORMAT NIL "./native/~A.fas" File))
-         (LibFile      (FORMAT NIL "./native/~A.lib" File))
-         (KlCode       (read-in-kl KlPath)))
-    (safedelete '(CopiedKlFile LspFile FasFile LibFile))
-    (write-out-kl CopiedKlFile KlCode)
-    (boot CopiedKlFile LspFile)
+  (LET ((KlFile       (FORMAT NIL "./kernel/klambda/~A.kl" File))
+        (IntermedFile (FORMAT NIL "./native/~A.intermed" File))
+        (LspFile      (FORMAT NIL "./native/~A.lsp" File))
+        (FasFile      (FORMAT NIL "./native/~A.fas" File))
+        (LibFile      (FORMAT NIL "./native/~A.lib" File)))
+    (write-out-kl IntermedFile (read-in-kl KlFile))
+    (boot IntermedFile LspFile)
     (COMPILE-FILE LspFile)
     (LOAD FasFile)))
-
-(DEFUN nn-h (Lisp)
-  (IF (NOT (CHAR-EQUAL (CAR Lisp) #\.))
-    (CONS (CAR Lisp) (nn-h (CDR Lisp)))))
 
 (DEFUN read-in-kl (File)
   (WITH-OPEN-FILE
@@ -122,13 +110,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
     (FORMAT Out "~{~C~}" Chars)))
 
 (DEFUN importfile (File)
-  (LET ((LspFile       (FORMAT NIL "~A.lsp" File))
-        (CopiedLspFile (FORMAT NIL "./native/~A.lsp" File))
-        (FasFile       (FORMAT NIL "./native/~A.fas" File))
-        (LibFile       (FORMAT NIL "./native/~A.lib" File)))
-    (safedelete '(CopiedLspFile FasFile LibFile))
-    (COPY-FILE LspFile CopiedLspFile)
-    (COMPILE-FILE CopiedLspFile)
+  (LET ((LspFile (FORMAT NIL "~A.lsp" File))
+        (FasFile (FORMAT NIL "./native/~A.fas" File)))
+    (COMPILE-FILE LspFile :OUTPUT-FILE FasFile)
     (LOAD FasFile)))
 
 (COMPILE 'read-in-kl)
