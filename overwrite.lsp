@@ -108,3 +108,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
         (SETQ *stoutput* *STANDARD-OUTPUT*)
         (SETQ *stinput* *STANDARD-INPUT*)
         (shen.shen)))))
+
+(DEFUN exit (Code)
+  (EXT:EXIT Code))
