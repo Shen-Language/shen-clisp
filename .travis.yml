@@ -7,4 +7,3 @@ addons:
       - clisp
 script:
   - ./build.sh
-
