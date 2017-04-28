@@ -6,4 +6,4 @@ addons:
     packages:
       - clisp
 script:
-  - ./build.sh
+  - ./shen.sh testsuite.shen
