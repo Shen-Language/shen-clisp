@@ -100,6 +100,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 (DEFUN thaw (F)
   (FUNCALL F))
 
+(DEFUN exit (Code)
+  (EXT:EXIT Code))
+
 (DEFUN shen.byteloop ()
   (HANDLER-BIND
     ((WARNING #'MUFFLE-WARNING))
@@ -107,7 +110,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
       (WITH-OPEN-STREAM (*STANDARD-OUTPUT* (EXT:MAKE-STREAM :OUTPUT :ELEMENT-TYPE 'UNSIGNED-BYTE))
         (SETQ *stoutput* *STANDARD-OUTPUT*)
         (SETQ *stinput* *STANDARD-INPUT*)
-        (shen.shen)))))
-
-(DEFUN exit (Code)
-  (EXT:EXIT Code))
+        (SETQ *sterror* *ERROR-OUTPUT*)
+        (IF (CONSP EXT:*ARGS*)
+          (PROGN
+            (MAPC 'load EXT:*ARGS*)
+            (EXT:EXIT 0))
+          (shen.shen))))))
