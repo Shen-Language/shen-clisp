@@ -1,3 +1,7 @@
+# Deprecated
+
+**This repo is not longer being actively maintained. It has been superceded by [shen-cl](https://github.com/Shen-Language/shen-cl).**
+
 [![Shen Version](https://img.shields.io/badge/shen-20.0-blue.svg)](https://github.com/Shen-Language)
 [![Build Status](https://travis-ci.org/Shen-Language/shen-clisp.svg?branch=master)](https://travis-ci.org/Shen-Language/shen-clisp)
 
